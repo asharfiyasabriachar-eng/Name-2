@@ -97,19 +97,34 @@
     </div>
 
     <script>
-        document.getElementById("nextBtn").addEventListener("click", function() {
-            var nameInput = document.getElementById("playerName").value.trim();
-            var errorMsg = document.getElementById("errorMsg");
-
-            if (nameInput === "") {
-                errorMsg.style.display = "block";
-                return;
+    window.addEventListener('DOMContentLoaded', function() {
+        var savedName = localStorage.getItem("savedPlayerName");
+        if (savedName) {
+            try {
+                if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+                    window.ReactNativeWebView.postMessage(savedName);
+                } else {
+                    window.parent.postMessage(savedName, "*");
+                }
+            } catch (error) {
+                console.log("Error: ", error);
             }
+        }
+    });
 
-            errorMsg.style.display = "none";
-            localStorage.setItem("savedPlayerName", nameInput);
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        var nameInput = document.getElementById("playerName").value.trim();
+        var errorMsg = document.getElementById("errorMsg");
 
-                    try {
+        if (nameInput === "") {
+            errorMsg.style.display = "block";
+            return;
+        }
+
+        errorMsg.style.display = "none";
+        localStorage.setItem("savedPlayerName", nameInput);
+
+        try {
             if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
                 window.ReactNativeWebView.postMessage(nameInput);
             } else {
@@ -118,9 +133,9 @@
         } catch (error) {
             console.log("Error: ", error);
         }
+    });
+</script>
 
-        });
-    </script>
 
 </body>
 </html>
