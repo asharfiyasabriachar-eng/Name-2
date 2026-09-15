@@ -109,15 +109,16 @@
             errorMsg.style.display = "none";
             localStorage.setItem("savedPlayerName", nameInput);
 
-            try {
-                if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-                    window.ReactNativeWebView.postMessage(nameInput);
-                } else {
-                    alert("Name Saved: " + nameInput + " (Ready for Thunkable)");
-                }
-            } catch (error) {
-                console.log("Error: ", error);
+                    try {
+            if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+                window.ReactNativeWebView.postMessage(nameInput);
+            } else {
+                window.parent.postMessage(nameInput, "*");
             }
+        } catch (error) {
+            console.log("Error: ", error);
+        }
+
         });
     </script>
 
