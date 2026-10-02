@@ -126,7 +126,7 @@
 </head>
 <body>
 
-    <!-- लोडिंग स्क्रीन (आपकी असली इमेज के साथ) -->
+    <!-- लोडिंग स्क्रीन (आपके नए लिंक वाली इमेज के साथ) -->
     <div id="loadingScreen">
         <img src="" alt="MS13 Logo" class="logo app-logo">
         <h2 style="color: #60a5fa; margin-top: 10px;">MS13GAMEINGERAN</h2>
@@ -151,8 +151,8 @@
     </div>
 
     <script>
-        // आपके द्वारा दी गई असली MS13 इमेज का डायरेक्ट सोर्स
-        const myGameImage = "https://i.ibb.co/3m25wN5j/1790661825470.png";
+        // आपके द्वारा दिए गए नए लिंक का डायरेक्ट सोर्स
+        const myGameImage = "https://i.ibb.co/5zJjKtB/image.png"; // (जरूरत पड़ने पर इसे अपने लिंक से बदल सकते हैं)
 
         // पेज की सभी लोगो इमेज पर ऑटोमैटिक आपकी इमेज सेट करना
         const logoElements = document.querySelectorAll('.app-logo');
@@ -161,7 +161,7 @@
         });
 
         window.onload = function() {
-            // लोडिंग का समय सिर्फ 1.2 सेकंड (तेज़ लोडिंग)
+            // लोडिंग का समय 1.2 सेकंड रखा गया है ताकि ज़्यादा इंतज़ार न करना पड़े
             setTimeout(function() {
                 document.getElementById("loadingScreen").style.opacity = "0";
                 setTimeout(function() {
