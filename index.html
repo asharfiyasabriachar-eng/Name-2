@@ -176,12 +176,11 @@
             // हमेशा के लिए नाम सेव करें
             localStorage.setItem("ms13_username", nameInput);
             
-            // Thunkable को नाम भेजें और आगे बढ़ाएं
+            // Thunkable को नाम भेजें
             sendDataToThunkable(nameInput);
         }
 
         function sendDataToThunkable(username) {
-            // Thunkable के Web Viewer को मैसेज भेजना
             if (window.ReactNativeWebView) {
                 window.ReactNativeWebView.postMessage(username);
             } else {
