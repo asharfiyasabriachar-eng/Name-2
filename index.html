@@ -150,14 +150,14 @@
 </head>
 <body>
 
-    <!-- प्रोफेशनल लोडिंग स्क्रीन -->
+    <!-- प्रोफेशनल लोडिंग स्क्रीन (हर बार ऐप खुलने पर दिखेगी) -->
     <div id="loadingScreen">
         <img src="" alt="MS13 Logo" class="logo app-logo">
         <h2 style="color: #60a5fa; margin-top: 10px;">MS13GAMEINGERAN</h2>
         <div class="spinner"></div>
     </div>
 
-    <!-- स्टेप 1: नाम दर्ज करने वाला पेज -->
+    <!-- स्टेप 1: नाम दर्ज करने वाला पेज (सिर्फ पहली बार नए यूजर के लिए) -->
     <div class="container" id="welcomeScreen">
         <img src="" alt="MS13 Logo" class="logo app-logo">
         <h2>स्वागत है!</h2>
@@ -188,20 +188,21 @@
         window.onload = function() {
             const savedName = localStorage.getItem("ms13_username");
             
+            // हर बार ऐप खुलने पर 2.5 सेकंड का शानदार लोडिंग चलेगा
             setTimeout(function() {
                 document.getElementById("loadingScreen").style.opacity = "0";
                 setTimeout(function() {
                     document.getElementById("loadingScreen").style.display = "none";
                     
                     if (savedName) {
-                        // अगर नाम पहले से सेव है, तो सीधे रूल्स वाले पेज पर ले जाओ
+                        // अगर नाम पहले से सेव है, तो लोडिंग के बाद सीधे रूल्स वाला पेज खुलेगा
                         document.getElementById("rulesScreen").style.display = "block";
                     } else {
-                        // अगर नया यूजर है, तो नाम वाला बॉक्स दिखाओ
+                        // अगर नया यूजर है, तो पहली बार नाम वाला बॉक्स दिखेगा
                         document.getElementById("welcomeScreen").style.display = "block";
                     }
                 }, 500);
-            }, 2500); // 2.5 सेकंड लोडिंग
+            }, 2500); 
         };
 
         function saveName() {
@@ -219,7 +220,7 @@
         }
 
         function goToNextPage() {
-            // आपके द्वारा दिया गया पेमेंट पेज का यूआरएल
+            // आपके पेमेंट पेज का यूआरएल, जो Google Sheet से जुड़ा है
             window.location.href = "https://asharfiyasabriachar-eng.github.io/Payment-/"; 
         }
     </script>
