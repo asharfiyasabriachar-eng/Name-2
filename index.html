@@ -1,141 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Home Screen</title>
+    <title>MS13GAMEINGERAN - Welcome</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
-            height: 100vh;
+            background: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ffffff;
+            height: 100vh;
+            text-align: center;
         }
         .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             width: 90%;
             max-width: 400px;
-            text-align: center;
-            color: #333333;
-            border-top: 6px solid #f1c40f;
-            position: relative;
-            z-index: 10;
+            padding: 20px;
+            background: #222;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffd700;
         }
         h2 {
             margin-bottom: 10px;
-            color: #d4ac0d;
-            font-size: 26px;
+            color: #ffd700;
         }
         p {
-            margin-bottom: 25px;
-            color: #666666;
+            color: #ccc;
             font-size: 14px;
-        }
-        .input-box {
-            width: 100%;
-            padding: 12px 15px;
             margin-bottom: 20px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-            background: #fff;
         }
-        .input-box:focus {
-            border-color: #f1c40f;
-            box-shadow: 0 0 5px rgba(241, 196, 15, 0.4);
-        }
-        .btn {
+        input[type="text"] {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            background: #333;
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ffd700;
+            color: #111;
             border: none;
-            border-radius: 8px;
-            color: #1a1a1a;
+            border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(241, 196, 15, 0.3);
         }
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        button:hover {
+            background: #ffc700;
         }
-        .error-msg {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: -12px;
-            margin-bottom: 15px;
+        #gameScreen {
             display: none;
-            text-align: left;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Welcome!</h2>
-        <p>Please enter your name to start the game</p>
-        
-        <input type="text" id="playerName" class="input-box" placeholder="Type your name here...">
-        <div id="errorMsg" class="error-msg">Please enter your name before proceeding!</div>
-        
-        <button type="button" id="nextBtn" class="btn">Next</button>
+    <!-- नाम दर्ज करने वाला पेज (सिर्फ नए यूजर के लिए) -->
+    <div class="container" id="welcomeScreen">
+        <!-- यहाँ अपने लोगो का लिंक या पाथ डालें -->
+        <img src="https://via.placeholder.com/100" alt="App Logo" class="logo" id="appLogo">
+        <h2>MS13GAMEINGERAN</h2>
+        <p>कृपया आगे बढ़ने के लिए अपना नाम दर्ज करें:</p>
+        <input type="text5" id="usernameInput" placeholder="अपना नाम यहाँ लिखें...">
+        <button onclick="saveName()">शुरू करें</button>
+    </div>
+
+    <!-- गेम या मुख्य होम स्क्रीन (पुराने/सेव्ड यूजर के लिए) -->
+    <div class="container" id="gameScreen">
+        <h1 id="greeting"></h1>
+        <p>आपका गेम लोड हो रहा है...</p>
+        <button onclick="resetData()" style="background: #ff4444; color: #fff; margin-top: 20px;">नाम बदलें / रीसेट करें</button>
     </div>
 
     <script>
-    window.addEventListener('DOMContentLoaded', function() {
-        var savedName = localStorage.getItem("savedPlayerName");
-        if (savedName) {
-            try {
-                if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-                    window.ReactNativeWebView.postMessage(savedName);
-                } else {
-                    window.parent.postMessage(savedName, "*");
-                }
-            } catch (error) {
-                console.log("Error: ", error);
+        // पेज लोड होते ही चेक करें कि क्या नाम पहले से सेव है
+        window.onload = function() {
+            const savedName = localStorage.getItem("ms13_username");
+            if (savedName) {
+                // अगर नाम पहले से है, तो सीधे गेम स्क्रीन दिखाओ
+                showGame(savedName);
             }
-        }
-    });
+        };
 
-    document.getElementById("nextBtn").addEventListener("click", function() {
-        var nameInput = document.getElementById("playerName").value.trim();
-        var errorMsg = document.getElementById("errorMsg");
-
-        if (nameInput === "") {
-            errorMsg.style.display = "block";
-            return;
-        }
-
-        errorMsg.style.display = "none";
-        localStorage.setItem("savedPlayerName", nameInput);
-
-        try {
-            if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-                window.ReactNativeWebView.postMessage(nameInput);
-            } else {
-                window.parent.postMessage(nameInput, "*");
+        function saveName() {
+            const nameInput = document.getElementById("usernameInput").value.trim();
+            if (nameInput === "") {
+                alert("कृपया अपना नाम दर्ज करें!");
+                return;
             }
-        } catch (error) {
-            console.log("Error: ", error);
+            // localStorage में हमेशा के लिए नाम सेव करें
+            localStorage.setItem("ms13_username", nameInput);
+            showGame(nameInput);
         }
-    });
-</script>
 
+        function showGame(username) {
+            document.getElementById("welcomeScreen").style.display = "none";
+            document.getElementById("gameScreen").style.display = "block";
+            document.getElementById("greeting").innerText = "स्वागत है, " + username + "!";
+        }
 
+        // अगर कोई यूजर अपना नाम दोबारा बदलना चाहे
+        function resetData() {
+            localStorage.removeItem("ms13_username");
+            location.reload();
+        }
+    </script>
 </body>
 </html>
