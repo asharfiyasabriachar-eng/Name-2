@@ -117,11 +117,6 @@
         button:active {
             transform: scale(0.98);
         }
-
-        #gameScreen {
-            display: none;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -142,14 +137,6 @@
         <button onclick="saveName()">शुरू करें</button>
     </div>
 
-    <!-- पुराने यूजर के लिए डायरेक्ट होम/गेम स्क्रीन -->
-    <div class="container" id="gameScreen">
-        <img src="" alt="MS13 Logo" class="logo app-logo">
-        <h2 id="greeting"></h2>
-        <p>आपका गेम सफलतापूर्वक लोड हो गया है।</p>
-        <button onclick="resetData()" style="background: #dc2626; margin-top: 15px; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);">नाम बदलें</button>
-    </div>
-
     <script>
         // आपकी इमेज का डायरेक्ट लिंक
         const myGameImage = "https://i.ibb.co/5zJjKtB/image.png";
@@ -161,21 +148,23 @@
         });
 
         window.onload = function() {
-            // प्रोफेशनल फील के लिए लोडिंग का समय 2.5 सेकंड (2500 मिलीसेकंड) सेट किया गया है
+            // चेक करें कि क्या नाम पहले से सेव है
+            const savedName = localStorage.getItem("ms13_username");
+            
             setTimeout(function() {
                 document.getElementById("loadingScreen").style.opacity = "0";
                 setTimeout(function() {
                     document.getElementById("loadingScreen").style.display = "none";
                     
-                    // चेक करें कि नाम पहले से सेव है या नहीं
-                    const savedName = localStorage.getItem("ms13_username");
                     if (savedName) {
-                        showGame(savedName);
+                        // अगर नाम पहले से है, तो सीधे Thunkable को सिग्नल भेजकर अगली स्क्रीन पर भेज दो
+                        sendDataToThunkable(savedName);
                     } else {
+                        // अगर नया यूजर है, तो नाम वाला बॉक्स दिखाओ
                         document.getElementById("welcomeScreen").style.display = "block";
                     }
-                }, 500); // फेड-आउट होने का समय
-            }, 2500); // 2.5 सेकंड का परफेक्ट प्रोफेशनल वेटिंग टाइम
+                }, 500);
+            }, 2500); // 2.5 सेकंड का प्रोफेशनल लोडिंग टाइम
         };
 
         function saveName() {
@@ -184,19 +173,20 @@
                 alert("कृपया पहले अपना नाम दर्ज करें!");
                 return;
             }
+            // हमेशा के लिए नाम सेव करें
             localStorage.setItem("ms13_username", nameInput);
-            showGame(nameInput);
+            
+            // Thunkable को नाम भेजें और आगे बढ़ाएं
+            sendDataToThunkable(nameInput);
         }
 
-        function showGame(username) {
-            document.getElementById("welcomeScreen").style.display = "none";
-            document.getElementById("gameScreen").style.display = "block";
-            document.getElementById("greeting").innerText = "नमस्ते, " + username + "!";
-        }
-
-        function resetData() {
-            localStorage.removeItem("ms13_username");
-            location.reload();
+        function sendDataToThunkable(username) {
+            // Thunkable के Web Viewer को मैसेज भेजना
+            if (window.ReactNativeWebView) {
+                window.ReactNativeWebView.postMessage(username);
+            } else {
+                console.log("Name Saved: " + username);
+            }
         }
     </script>
 </body>
