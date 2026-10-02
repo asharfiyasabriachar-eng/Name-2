@@ -59,7 +59,7 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
-            display: none;
+            display: none; /* शुरुआत में छिपा रहेगा */
         }
 
         .logo {
@@ -157,10 +157,10 @@
                     document.getElementById("loadingScreen").style.display = "none";
                     
                     if (savedName) {
-                        // अगर नाम पहले से है, तो सीधे Thunkable को सिग्नल भेजकर अगली स्क्रीन पर भेज दो
+                        // अगर नाम पहले से है, तो सीधे Thunkable को सिग्नल भेजो
                         sendDataToThunkable(savedName);
                     } else {
-                        // अगर नया यूजर है, तो नाम वाला बॉक्स दिखाओ
+                        // अगर नया यूजर है, तो नाम वाला बॉक्स साफ़-साफ़ दिखाओ
                         document.getElementById("welcomeScreen").style.display = "block";
                     }
                 }, 500);
