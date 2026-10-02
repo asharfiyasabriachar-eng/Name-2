@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS13GAMEINGERAN</title>
+    <title>MS13GAMEINGERAN - Rules</title>
     <style>
         * {
             box-sizing: border-box;
@@ -17,13 +17,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* लोडिंग स्क्रीन स्टाइल */
         #loadingScreen {
-            position: absolute;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: #0f172a;
@@ -31,7 +33,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            z-index: 100;
             transition: opacity 0.6s ease;
         }
         .spinner {
@@ -48,41 +50,42 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* मेन कार्ड बॉक्स स्टाइल */
+        /* जनरल कार्ड बॉक्स स्टाइल */
         .container {
             width: 90%;
-            max-width: 380px;
+            max-width: 400px;
             padding: 30px 20px;
-            background: rgba(30, 58, 138, 0.4);
-            backdrop-filter: blur(10px);
+            background: rgba(30, 58, 138, 0.35);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             text-align: center;
-            display: none; /* शुरुआत में छिपा रहेगा */
+            display: none;
+            margin: 20px 0;
         }
 
         .logo {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 15px;
-            border-radius: 20px;
+            width: 85px;
+            height: 85px;
+            margin-bottom: 12px;
+            border-radius: 18px;
             object-fit: cover;
             border: 2px solid #60a5fa;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
         }
 
         h2 {
-            margin: 10px 0 5px 0;
+            margin: 5px 0 15px 0;
             color: #60a5fa;
-            font-size: 22px;
+            font-size: 24px;
             letter-spacing: 0.5px;
         }
 
         p {
             color: #cbd5e1;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
@@ -92,7 +95,7 @@
             border: 1px solid #3b82f6;
             background: rgba(15, 23, 42, 0.8);
             color: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             outline: none;
             text-align: center;
@@ -101,20 +104,46 @@
             color: #64748b;
         }
 
-        button {
+        /* रूल्स बॉक्स के लिए खास स्टाइल */
+        .rules-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: left;
+            margin-bottom: 20px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+        .rules-box h3 {
+            color: #60a5fa;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .rules-box p {
+            color: #e2e8f0;
+            font-size: 13.5px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* खूबसूरत ब्लू कंटिन्यू बटन */
+        .btn {
             width: 100%;
             padding: 14px;
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: #ffffff;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
             transition: all 0.2s ease;
         }
-        button:active {
+        .btn:active {
             transform: scale(0.98);
         }
     </style>
@@ -128,13 +157,23 @@
         <div class="spinner"></div>
     </div>
 
-    <!-- नए यूजर के लिए नाम दर्ज करने वाला पेज -->
+    <!-- स्टेप 1: नाम दर्ज करने वाला पेज -->
     <div class="container" id="welcomeScreen">
         <img src="" alt="MS13 Logo" class="logo app-logo">
         <h2>स्वागत है!</h2>
         <p>जारी रखने के लिए कृपया अपना नाम दर्ज करें:</p>
         <input type="text" id="usernameInput" placeholder="अपना नाम यहाँ लिखें...">
-        <button onclick="saveName()">शुरू करें</button>
+        <button class="btn" onclick="saveName()">शुरू करें</button>
+    </div>
+
+    <!-- स्टेप 2: रूल्स (Rules of Play) वाला पेज -->
+    <div class="container" id="rulesScreen">
+        <img src="" alt="MS13 Logo" class="logo app-logo">
+        <div class="rules-box">
+            <h3>Rules OF PLAY ⭐</h3>
+            <p>The entry fee to play the game is ₹20, which is valid for a 24-hour period. Once the ₹20 payment is made, the app will remain fully unlocked and accessible for the next 24 hours (86,400 seconds). You can play as many times as you like within these 24 hours. After the time expires, another ₹20 payment is required to play again.<br><br><strong>Winning Prize Money:</strong> Winning amount is not fixed.</p>
+        </div>
+        <button class="btn" onclick="goToNextPage()">Continue</button>
     </div>
 
     <script>
@@ -142,13 +181,11 @@
         const myGameImage = "https://i.ibb.co/5zJjKtB/image.png";
 
         // सभी लोगो पर इमेज सेट करना
-        const logoElements = document.querySelectorAll('.app-logo');
-        logoElements.forEach(img => {
+        document.querySelectorAll('.app-logo').forEach(img => {
             img.src = myGameImage;
         });
 
         window.onload = function() {
-            // चेक करें कि क्या नाम पहले से सेव है
             const savedName = localStorage.getItem("ms13_username");
             
             setTimeout(function() {
@@ -157,14 +194,14 @@
                     document.getElementById("loadingScreen").style.display = "none";
                     
                     if (savedName) {
-                        // अगर नाम पहले से है, तो सीधे Thunkable को सिग्नल भेजो
-                        sendDataToThunkable(savedName);
+                        // अगर नाम पहले से सेव है, तो सीधे रूल्स वाले पेज पर ले जाओ
+                        document.getElementById("rulesScreen").style.display = "block";
                     } else {
-                        // अगर नया यूजर है, तो नाम वाला बॉक्स साफ़-साफ़ दिखाओ
+                        // अगर नया यूजर है, तो नाम वाला बॉक्स दिखाओ
                         document.getElementById("welcomeScreen").style.display = "block";
                     }
                 }, 500);
-            }, 2500); // 2.5 सेकंड का प्रोफेशनल लोडिंग टाइम
+            }, 2500); // 2.5 सेकंड लोडिंग
         };
 
         function saveName() {
@@ -173,19 +210,17 @@
                 alert("कृपया पहले अपना नाम दर्ज करें!");
                 return;
             }
-            // हमेशा के लिए नाम सेव करें
+            // नाम सेव करें
             localStorage.setItem("ms13_username", nameInput);
             
-            // Thunkable को नाम भेजें
-            sendDataToThunkable(nameInput);
+            // नाम सबमिट होते ही नाम वाला बॉक्स छिपाकर रूल्स वाला पेज दिखाओ
+            document.getElementById("welcomeScreen").style.display = "none";
+            document.getElementById("rulesScreen").style.display = "block";
         }
 
-        function sendDataToThunkable(username) {
-            if (window.ReactNativeWebView) {
-                window.ReactNativeWebView.postMessage(username);
-            } else {
-                console.log("Name Saved: " + username);
-            }
+        function goToNextPage() {
+            // आपके द्वारा दिया गया पेमेंट पेज का यूआरएल
+            window.location.href = "https://asharfiyasabriachar-eng.github.io/Payment-/"; 
         }
     </script>
 </body>
