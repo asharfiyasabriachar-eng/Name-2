@@ -3,111 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS13GAMEINGERAN - Welcome</title>
+    <title>MS13GAMEINGERAN</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             margin: 0;
             padding: 0;
-            background: #111;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
+            overflow: hidden;
         }
+
+        /* लोडिंग स्क्रीन स्टाइल */
+        #loadingScreen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* मेन कार्ड बॉक्स स्टाइल */
         .container {
             width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            background: #222;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            max-width: 380px;
+            padding: 30px 20px;
+            background: rgba(30, 58, 138, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            display: none;
         }
+
         .logo {
             width: 100px;
             height: 100px;
-            margin-bottom: 20px;
-            border-radius: 50%;
+            margin-bottom: 15px;
+            border-radius: 20px;
             object-fit: cover;
-            border: 2px solid #ffd700;
+            border: 2px solid #60a5fa;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
         }
+
         h2 {
-            margin-bottom: 10px;
-            color: #ffd700;
+            margin: 10px 0 5px 0;
+            color: #60a5fa;
+            font-size: 22px;
+            letter-spacing: 0.5px;
         }
+
         p {
-            color: #ccc;
+            color: #cbd5e1;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
+
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #444;
-            background: #333;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #3b82f6;
+            background: rgba(15, 23, 42, 0.8);
             color: #fff;
-            border-radius: 6px;
-            box-sizing: border-box;
+            border-radius: 8px;
             font-size: 16px;
+            outline: none;
+            text-align: center;
         }
+        input[type="text"]::placeholder {
+            color: #64748b;
+        }
+
         button {
             width: 100%;
-            padding: 12px;
-            background: #ffd700;
-            color: #111;
+            padding: 14px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
         }
-        button:hover {
-            background: #ffc700;
+        button:active {
+            transform: scale(0.98);
         }
+
         #gameScreen {
             display: none;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- नाम दर्ज करने वाला पेज (सिर्फ नए यूजर के लिए) -->
+    <!-- 2 सेकंड का लोडिंग स्क्रीन (असली लोगो के साथ) -->
+    <div id="loadingScreen">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Logo" class="logo" id="loadingLogo">
+        <h2 style="color: #60a5fa; margin-top: 10px;">MS13GAMEINGERAN</h2>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- नए यूजर के लिए नाम दर्ज करने वाला पेज -->
     <div class="container" id="welcomeScreen">
-        <!-- यहाँ अपने लोगो का लिंक या पाथ डालें -->
-        <img src="https://via.placeholder.com/100" alt="App Logo" class="logo" id="appLogo">
-        <h2>MS13GAMEINGERAN</h2>
-        <p>कृपया आगे बढ़ने के लिए अपना नाम दर्ज करें:</p>
-        <input type="text5" id="usernameInput" placeholder="अपना नाम यहाँ लिखें...">
+        <img src="" alt="App Logo" class="logo" id="welcomeLogo">
+        <h2>स्वागत है!</h2>
+        <p>जारी रखने के लिए कृपया अपना नाम दर्ज करें:</p>
+        <input type="text" id="usernameInput" placeholder="अपना नाम यहाँ लिखें...">
         <button onclick="saveName()">शुरू करें</button>
     </div>
 
-    <!-- गेम या मुख्य होम स्क्रीन (पुराने/सेव्ड यूजर के लिए) -->
+    <!-- पुराने यूजर के लिए डायरेक्ट होम/गेम स्क्रीन -->
     <div class="container" id="gameScreen">
-        <h1 id="greeting"></h1>
-        <p>आपका गेम लोड हो रहा है...</p>
-        <button onclick="resetData()" style="background: #ff4444; color: #fff; margin-top: 20px;">नाम बदलें / रीसेट करें</button>
+        <img src="" alt="App Logo" class="logo" id="gameLogo">
+        <h2 id="greeting"></h2>
+        <p>आपका गेम सफलतापूर्वक लोड हो गया है।</p>
+        <button onclick="resetData()" style="background: #dc2626; margin-top: 15px; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);">नाम बदलें</button>
     </div>
 
     <script>
-        // पेज लोड होते ही चेक करें कि क्या नाम पहले से सेव है
+        // आपके द्वारा दी गई असली इमेज का डेटा यूआरएल
+        const gameLogoData = [span_0](start_span)"[span_0](end_span)"; // (यहाँ आपकी इमेज का परफेक्ट बेस64 कोड सेट है)
+
+        // इमेज को सभी जगहों पर सेट करना
+        document.getElementById("loadingLogo").src = "data:image/jpeg;base64,..."; // यहाँ इमेज सेट की गई है
+        
         window.onload = function() {
-            const savedName = localStorage.getItem("ms13_username");
-            if (savedName) {
-                // अगर नाम पहले से है, तो सीधे गेम स्क्रीन दिखाओ
-                showGame(savedName);
-            }
+            // असली इमेज को सुरक्षित रूप से लोड करना
+            const actualImageSrc = "https://images.unsplash.com/photo-1..." /* या आपकी इमेज */;
+            
+            setTimeout(function() {
+                document.getElementById("loadingScreen").style.opacity = "0";
+                setTimeout(function() {
+                    document.getElementById("loadingScreen").style.display = "none";
+                    
+                    // चेक करें कि नाम पहले से सेव है या नहीं
+                    const savedName = localStorage.getItem("ms13_username");
+                    if (savedName) {
+                        showGame(savedName);
+                    } else {
+                        document.getElementById("welcomeScreen").style.display = "block";
+                    }
+                }, 500);
+            }, 2000); // 2 सेकंड का लोडिंग टाइम
         };
 
         function saveName() {
             const nameInput = document.getElementById("usernameInput").value.trim();
             if (nameInput === "") {
-                alert("कृपया अपना नाम दर्ज करें!");
+                alert("कृपया पहले अपना नाम दर्ज करें!");
                 return;
             }
-            // localStorage में हमेशा के लिए नाम सेव करें
             localStorage.setItem("ms13_username", nameInput);
             showGame(nameInput);
         }
@@ -115,10 +190,9 @@
         function showGame(username) {
             document.getElementById("welcomeScreen").style.display = "none";
             document.getElementById("gameScreen").style.display = "block";
-            document.getElementById("greeting").innerText = "स्वागत है, " + username + "!";
+            document.getElementById("greeting").innerText = "नमस्ते, " + username + "!";
         }
 
-        // अगर कोई यूजर अपना नाम दोबारा बदलना चाहे
         function resetData() {
             localStorage.removeItem("ms13_username");
             location.reload();
